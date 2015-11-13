@@ -46,14 +46,14 @@ public class LoginForm extends JFrame{
 		Box box=Box.createHorizontalBox();
 		box.add(new JLabel("用户:"));
 		box.add(Box.createHorizontalStrut(6));
-		username=new JTextField();
+		username=new JTextField("admin");
 		box.add(username);
 		add(box);
 		//密码
 		box=Box.createHorizontalBox();
 		box.add(new JLabel("密码:"));
 		box.add(Box.createHorizontalStrut(6));
-		password=new JPasswordField();
+		password=new JPasswordField("admin");
 		box.add(password);
 		add(box);
 		//按钮
@@ -68,8 +68,10 @@ public class LoginForm extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
-				if(db_user.login(username.getText(),new String(password.getPassword()))){
-					
+				int uid=db_user.login(username.getText(),new String(password.getPassword()));
+				if(uid>0){
+					new MainForm(uid,username.getText()).setVisible(true);
+					LoginForm.this.dispose();
 				}else{
 					JOptionPane.showMessageDialog(null,"用户名或密码错误");
 					password.setText("");
