@@ -35,7 +35,7 @@ public class MainForm extends JFrame{
 		tb.addTab("成绩查询",new ScorePanel());
 		tb.addTab("学生管理",new StudentPanel());
 		tb.addTab("班级管理",new JPanel());
-		tb.addTab("科目管理",new JPanel());
+		tb.addTab("课程管理",new JPanel());
 		tb.addTab("权限管理",new JPanel());
 		tb.setSelectedIndex(0);
 		add(BorderLayout.CENTER,tb);

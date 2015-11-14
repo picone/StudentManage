@@ -1,13 +1,13 @@
 package com.chien.student;
 
 import java.awt.BorderLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 
-import javax.swing.Box;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +20,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
 import com.chien.dao.AcademyDAO;
 import com.chien.dao.ClassDAO;
@@ -63,13 +64,13 @@ public class StudentPanel extends JPanel{
 			data=db_major.getAll();
 			cb=new JComboBox<>();
 			while(data.next()){
-				cb.addItem(data.getString(2));
+				cb.addItem(data.getString(3));
 			}
 			cm.getColumn(2).setCellEditor(new DefaultCellEditor(cb));
 			data=db_class.getAll();
 			cb=new JComboBox<>();
 			while(data.next()){
-				cb.addItem(data.getString(2));
+				cb.addItem(data.getString(3));
 			}
 			cm.getColumn(3).setCellEditor(new DefaultCellEditor(cb));
 		} catch (SQLException e) {
@@ -80,21 +81,21 @@ public class StudentPanel extends JPanel{
 		sp.setViewportView(student);
 		add(BorderLayout.WEST,sp);
 		
-		Box box=Box.createVerticalBox();
+		JPanel box=new JPanel(new VFlowLayout());
 		create=new JButton("添加");
 		box.add(create);
-		box.add(Box.createVerticalStrut(6));
 		delete=new JButton("删除");
 		box.add(delete);
-		box.add(Box.createVerticalStrut(6));
 		reflash=new JButton("刷新");
 		box.add(reflash);
 		add(BorderLayout.EAST,box);
+		
 		create.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				student_model.addRow(new String[]{"","","","","",String.valueOf(calendar.get(Calendar.YEAR))});
+				student.changeSelection(student.getRowCount()-1, 0, false, false);
 			}
 		});
 		delete.addActionListener(new ActionListener(){
@@ -134,6 +135,7 @@ public class StudentPanel extends JPanel{
 		}
 		student_model.addTableModelListener(new MyTableModelListener());
 		student.setModel(student_model);
+		student.setRowSorter(new TableRowSorter<DefaultTableModel>(student_model));
 		System.gc();
 	}
 	

@@ -1,14 +1,11 @@
 package com.chien.student;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -16,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.chien.dao.ScoreDAO;
 import com.chien.dao.StudentDAO;
@@ -60,7 +58,6 @@ public class ScorePanel extends JPanel{
 			}
 		});
 		p.add(scale_case);
-		p.add(Box.createVerticalStrut(6));
 		group_case=new JComboBox<>();
 		group_case.addItem("按学生查看");
 		group_case.addItem("按学院查看");
@@ -74,10 +71,8 @@ public class ScorePanel extends JPanel{
 			}}
 		);
 		p.add(group_case);
-		p.add(Box.createVerticalStrut(6));
 		create=new JButton("录入");
 		p.add(create);
-		p.add(Box.createVerticalStrut(6));
 		print=new JButton("打印");
 		p.add(print);
 		add(BorderLayout.EAST,p);
@@ -113,6 +108,7 @@ public class ScorePanel extends JPanel{
 					tm.addRow(row);
 				}
 				table.setModel(tm);
+				table.setRowSorter(new TableRowSorter<DefaultTableModel>(tm));
 			}
 		} catch (SQLException e) {
 			System.out.println(e.toString());
