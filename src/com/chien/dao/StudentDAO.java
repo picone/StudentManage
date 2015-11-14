@@ -10,7 +10,7 @@ public class StudentDAO extends BaseDAO{
 	}
 	
 	public ResultSet getAll() throws SQLException{
-		return stat.executeQuery("SELECT * FROM student_info");
+		return stat.executeQuery("SELECT student_id,academy_name,major_name,class_name,student_name,scale FROM student_view");
 	}
 	
 	public boolean delete(String student_id){
@@ -36,5 +36,9 @@ public class StudentDAO extends BaseDAO{
 			
 		}
 		return false;
+	}
+	
+	public ResultSet getScale() throws SQLException{
+		return stat.executeQuery("SELECT DISTINCT scale FROM student");
 	}
 }

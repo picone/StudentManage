@@ -28,18 +28,19 @@ public class MainForm extends JFrame{
 		//初始化界面
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		setLocationRelativeTo(null);
 		setSize(520,300);
 		setTitle("学生成绩管理系统");
 		JTabbedPane tb=new JTabbedPane();
 		JPanel p;
-		tb.addTab("成绩查询",new JPanel());
-		tb.addTab("成绩录入",new JPanel());
+		tb.addTab("成绩查询",new ScorePanel());
 		tb.addTab("学生管理",new StudentPanel());
 		tb.addTab("班级管理",new JPanel());
 		tb.addTab("科目管理",new JPanel());
 		tb.addTab("权限管理",new JPanel());
-		tb.setSelectedIndex(2);
+		tb.setSelectedIndex(0);
 		add(BorderLayout.CENTER,tb);
+		setJMenuBar(new MainMenuBar());
+		pack();
+		setLocationRelativeTo(null);
 	}
 }

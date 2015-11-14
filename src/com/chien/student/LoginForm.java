@@ -32,9 +32,9 @@ public class LoginForm extends JFrame{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new GridLayout(4,1));
-		setLocationRelativeTo(null);
 		setResizable(false);
 		setSize(200,120);
+		setLocationRelativeTo(null);
 		setTitle("用户登录");
 		//标题
 		JPanel p=new JPanel();
