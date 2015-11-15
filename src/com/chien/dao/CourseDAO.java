@@ -28,7 +28,16 @@ public class CourseDAO extends BaseDAO{
 			}else{
 				stat.execute("UPDATE course SET name='"+name+"' WHERE course_id="+course_id);
 			}
-		}catch(Exception e){
+		}catch(SQLException e){
+			
+		}
+		return false;
+	}
+	
+	public boolean delete(int course_id){
+		try{
+			return stat.execute("DELETE FROM course WHERE course_id="+course_id);
+		}catch(SQLException e){
 			
 		}
 		return false;

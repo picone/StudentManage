@@ -61,8 +61,10 @@ public class CoursePanel extends JPanel{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO 自动生成的方法存根
-				course_id=db_course.getId(list.getSelectedValue());
-				course_name.setText(list.getSelectedValue().trim());
+				if(e.getValueIsAdjusting()){
+					course_id=db_course.getId(list.getSelectedValue());
+					course_name.setText(list.getSelectedValue().trim());
+				}
 			}
 		});
 		create.addActionListener(new ActionListener(){
@@ -88,6 +90,21 @@ public class CoursePanel extends JPanel{
 					course_id=0;
 					JOptionPane.showMessageDialog(null,"保存成功");
 					loadData();
+				}
+			}
+		});
+		delete.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				if(course_id>0){
+					if(JOptionPane.showConfirmDialog(null,"你是否要删除"+list.getSelectedValue()+"?","警告",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
+						db_course.delete(course_id);
+						loadData();
+					}
+				}else{
+					course_data.remove(list.getSelectedIndex());
+					list.setListData(course_data);
 				}
 			}
 		});

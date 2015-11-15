@@ -32,10 +32,10 @@ public class MainForm extends JFrame{
 		JTabbedPane tb=new JTabbedPane();
 		tb.addTab("成绩",new ScorePanel());
 		tb.addTab("学生",new StudentPanel());
-		tb.addTab("班级",new JPanel());
+		tb.addTab("班级",new ClassPanel());
 		tb.addTab("课程",new CoursePanel());
 		tb.addTab("权限",new JPanel());
-		tb.setSelectedIndex(3);
+		tb.setSelectedIndex(2);
 		add(BorderLayout.CENTER,tb);
 		setJMenuBar(new MainMenuBar());
 		pack();
