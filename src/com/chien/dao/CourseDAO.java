@@ -20,4 +20,17 @@ public class CourseDAO extends BaseDAO{
 		}
 		return result;
 	}
+	
+	public boolean insert(int course_id,String name){
+		try{
+			if(course_id==0){
+				return stat.execute("INSERT INTO course (name) VALUES ('"+name+"')");
+			}else{
+				stat.execute("UPDATE course SET name='"+name+"' WHERE course_id="+course_id);
+			}
+		}catch(Exception e){
+			
+		}
+		return false;
+	}
 }
