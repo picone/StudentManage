@@ -60,6 +60,7 @@ public class LoginForm extends JFrame{
 		p=new JPanel(new BorderLayout());
 		login=new JButton("登录");
 		p.add(BorderLayout.WEST,login);
+		this.getRootPane().setDefaultButton(login);
 		exit=new JButton("退出");
 		p.add(BorderLayout.EAST,exit);
 		add(p);

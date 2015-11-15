@@ -3,6 +3,7 @@ package com.chien.student;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -23,7 +24,7 @@ public class ScorePanel extends JPanel{
 	
 	private JTable table;
 	private JComboBox<String> group_case,scale_case;
-	private JButton create,print;
+	private JButton create,reflash,print;
 	
 	private ScoreDAO db_score;
 	private StudentDAO db_student;
@@ -73,10 +74,39 @@ public class ScorePanel extends JPanel{
 		p.add(group_case);
 		create=new JButton("录入");
 		p.add(create);
+		reflash=new JButton("刷新");
+		p.add(reflash);
 		print=new JButton("打印");
 		p.add(print);
 		add(BorderLayout.EAST,p);
 		loadData();
+		
+		create.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				new EnteringForm().setVisible(true);
+			}
+		});
+		reflash.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				loadData();
+			}
+		});
+		print.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				try {
+					table.print();
+				} catch (PrinterException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	private void loadData(){

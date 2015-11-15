@@ -22,23 +22,33 @@ public class StudentDAO extends BaseDAO{
 		return false;
 	}
 	
-	public boolean insert(long id,String name,int academy,int major,int c,int scale){
+	public boolean insert(long id,String name,int c,int scale){
 		try{
-			PreparedStatement stat=conn.prepareStatement("REPLACE INTO student (student_id,name,academy_id,major_id,class_id,scale) VALUES (?,?,?,?,?,?)");
+			PreparedStatement stat=conn.prepareStatement("REPLACE INTO student (student_id,name,class_id,scale) VALUES (?,?,?,?)");
 			stat.setLong(1,id);
 			stat.setString(2,name);
-			stat.setInt(3,academy);
-			stat.setInt(4,major);
-			stat.setInt(5,c);
-			stat.setInt(6,scale);
+			stat.setInt(3,c);
+			stat.setInt(4,scale);
 			return stat.execute();
 		}catch(SQLException e){
-			
+			System.out.println(e.toString());
 		}
 		return false;
 	}
 	
 	public ResultSet getScale() throws SQLException{
 		return stat.executeQuery("SELECT DISTINCT scale FROM student");
+	}
+	
+	public String getName(String student_id){
+		try{
+			ResultSet cursor=stat.executeQuery("SELECT name FROM student WHERE student_id="+student_id);
+			if(cursor.next()){
+				return cursor.getString(1);
+			}
+		}catch(SQLException e){
+			
+		}
+		return null;
 	}
 }

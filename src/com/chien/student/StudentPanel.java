@@ -1,9 +1,9 @@
 package com.chien.student;
 
 import java.awt.BorderLayout;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PrinterException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -33,7 +33,7 @@ public class StudentPanel extends JPanel{
 	
 	private JTable student;
 	private DefaultTableModel student_model;
-	private JButton create,delete,reflash;
+	private JButton create,delete,reflash,print;
 	
 	private StudentDAO db_student;
 	private AcademyDAO db_academy;
@@ -88,6 +88,8 @@ public class StudentPanel extends JPanel{
 		box.add(delete);
 		reflash=new JButton("刷新");
 		box.add(reflash);
+		print=new JButton("打印");
+		box.add(print);
 		add(BorderLayout.EAST,box);
 		
 		create.addActionListener(new ActionListener(){
@@ -115,6 +117,18 @@ public class StudentPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				loadData();
+			}
+		});
+		print.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				try {
+					student.print();
+				} catch (PrinterException e1) {
+					// TODO 自动生成的 catch 块
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
@@ -154,12 +168,10 @@ public class StudentPanel extends JPanel{
 				if(is_finish){
 					try{
 						long student_id=Long.parseLong((String) student_model.getValueAt(e.getFirstRow(),0));
-						int academy_id=db_academy.getId((String) student_model.getValueAt(e.getFirstRow(),1));
-						int major_id=db_major.getId((String) student_model.getValueAt(e.getFirstRow(),2));
 						int class_id=db_class.getId((String) student_model.getValueAt(e.getFirstRow(),3));
 						int scale=Integer.parseInt((String) student_model.getValueAt(e.getFirstRow(),5));
 						if(JOptionPane.showConfirmDialog(null,"你是否要更新"+student_model.getValueAt(e.getFirstRow(),4)+"的信息吗?","提示",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
-							db_student.insert(student_id,(String)student_model.getValueAt(e.getFirstRow(),4),academy_id, major_id, class_id,scale);
+							db_student.insert(student_id,(String)student_model.getValueAt(e.getFirstRow(),4),class_id,scale);
 						}
 					}catch(NumberFormatException ex){
 						JOptionPane.showMessageDialog(null,"请输入数字");

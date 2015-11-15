@@ -1,5 +1,6 @@
 package com.chien.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,5 +23,18 @@ public class ScoreDAO extends BaseDAO{
 	
 	public ResultSet getScoreGroupClassId(String scale) throws SQLException{
 		return stat.executeQuery("SELECT academy_name,major_name,class_name,GROUP_CONCAT(DISTINCT course_name),AVG(score) AS score,pass/count(student_id)*100 FROM score_view JOIN (SELECT COUNT(student_id) AS pass,class_id FROM score_view WHERE score>=60 AND scale="+scale+" GROUP BY class_id) AS pass ON pass.class_id=score_view.class_id WHERE scale="+scale+" GROUP BY score_view.class_id ORDER BY score DESC");
+	}
+	
+	public boolean insert(long student_id,int course_id,int score){
+		try{
+			PreparedStatement stat=conn.prepareStatement("REPLACE INTO score (student_id,course_id,score) VALUES (?,?,?)");
+			stat.setLong(1,student_id);
+			stat.setInt(2,course_id);
+			stat.setInt(3,score);
+			return stat.execute();
+		}catch(SQLException e){
+			
+		}
+		return false;
 	}
 }
