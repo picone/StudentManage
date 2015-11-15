@@ -31,7 +31,7 @@ public class StudentDAO extends BaseDAO{
 			stat.setInt(4,scale);
 			return stat.execute();
 		}catch(SQLException e){
-			System.out.println(e.toString());
+			
 		}
 		return false;
 	}

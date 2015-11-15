@@ -20,4 +20,16 @@ public class AcademyDAO extends BaseDAO{
 		}
 		return result;
 	}
+	
+	public boolean delete(String name) throws SQLException{
+		return stat.execute("DELETE FROM academy WHERE name='"+name+"'");
+	}
+	
+	public boolean insert(String name) throws SQLException{
+		return stat.execute("INSERT INTO academy (name) VALUES ('"+name+"')");
+	}
+	
+	public boolean update(String before,String after) throws SQLException{
+		return stat.execute("UPDATE academy SET name='"+after+"' WHERE name='"+before+"'");
+	}
 }

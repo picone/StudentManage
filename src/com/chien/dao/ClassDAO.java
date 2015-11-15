@@ -20,4 +20,20 @@ public class ClassDAO extends BaseDAO{
 		}
 		return result;
 	}
+	
+	public ResultSet getAll(String major) throws SQLException{
+		return stat.executeQuery("SELECT class_name FROM class_view WHERE major_name='"+major+"'");
+	}
+	
+	public boolean delete(String name) throws SQLException{
+		return stat.execute("DELETE FROM class WHERE name='"+name+"'");
+	}
+	
+	public boolean insert(int major_id,String name) throws SQLException{
+		return stat.execute("INSERT INTO class (major_id,name) VALUES ("+major_id+",'"+name+"')");
+	}
+	
+	public boolean update(String before,String after) throws SQLException{
+		return stat.execute("UPDATE class SET name='"+after+"' WHERE name='"+before+"'");
+	}
 }

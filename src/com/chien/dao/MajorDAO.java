@@ -20,4 +20,20 @@ public class MajorDAO extends BaseDAO{
 		}
 		return result;
 	}
+	
+	public ResultSet getAll(String academy) throws SQLException{
+		return stat.executeQuery("SELECT major_name FROM major_view WHERE academy_name='"+academy+"'");
+	}
+	
+	public boolean delete(String name) throws SQLException{
+		return stat.execute("DELETE FROM major WHERE name='"+name+"'");
+	}
+	
+	public boolean insert(int academy_id,String name) throws SQLException{
+		return stat.execute("INSERT INTO major (academy_id,name) VALUES ("+academy_id+",'"+name+"')");
+	}
+	
+	public boolean update(String before,String after) throws SQLException{
+		return stat.execute("UPDATE major SET name='"+after+"' WHERE name='"+before+"'");
+	}
 }
