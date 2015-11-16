@@ -46,14 +46,14 @@ public class LoginForm extends JFrame{
 		Box box=Box.createHorizontalBox();
 		box.add(new JLabel("用户:"));
 		box.add(Box.createHorizontalStrut(6));
-		username=new JTextField("admin");
+		username=new JTextField();
 		box.add(username);
 		add(box);
 		//密码
 		box=Box.createHorizontalBox();
 		box.add(new JLabel("密码:"));
 		box.add(Box.createHorizontalStrut(6));
-		password=new JPasswordField("admin");
+		password=new JPasswordField();
 		box.add(password);
 		add(box);
 		//按钮
