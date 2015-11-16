@@ -105,7 +105,7 @@ public class StudentPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				int row=student.getSelectedRow();
-				if(row>0&&JOptionPane.showConfirmDialog(null,"你确定要删除学生"+student_model.getValueAt(row,4)+"?","警告",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
+				if(row>=0&&JOptionPane.showConfirmDialog(null,"你确定要删除学生"+student_model.getValueAt(row,4)+"?","警告",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
 					db_student.delete((String) student_model.getValueAt(row,0));
 					student_model.removeRow(row);
 					JOptionPane.showMessageDialog(null,"删除成功!");

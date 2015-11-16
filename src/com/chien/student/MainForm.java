@@ -3,7 +3,6 @@ package com.chien.student;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import com.chien.dao.UserDAO;
@@ -34,8 +33,8 @@ public class MainForm extends JFrame{
 		tb.addTab("学生",new StudentPanel());
 		tb.addTab("班级",new ClassPanel());
 		tb.addTab("课程",new CoursePanel());
-		tb.addTab("权限",new JPanel());
-		tb.setSelectedIndex(2);
+		tb.addTab("权限",new AuthPanel());
+		tb.setSelectedIndex(4);
 		add(BorderLayout.CENTER,tb);
 		setJMenuBar(new MainMenuBar());
 		pack();

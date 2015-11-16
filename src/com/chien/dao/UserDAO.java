@@ -59,4 +59,17 @@ public class UserDAO extends BaseDAO{
 		}
 		return 0;
 	}
+	
+	public boolean insert(String name,String password,int auth) throws SQLException, NoSuchAlgorithmException{
+		password=new MD5().md5(password);
+		return stat.execute("INSERT INTO user (username,password,auth) VALUES ('"+name+"','"+password+"',"+auth+")");
+	}
+	
+	public boolean update(String uid,String name,int auth) throws SQLException{
+		return stat.execute("UPDATE user SET username='"+name+"',auth="+auth+" WHERE uid="+uid);
+	}
+	
+	public boolean delete(String uid) throws SQLException{
+		return stat.execute("DELETE FROM user WHERE uid="+uid);
+	}
 }
