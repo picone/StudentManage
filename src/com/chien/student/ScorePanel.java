@@ -1,6 +1,7 @@
 package com.chien.student;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
@@ -18,6 +19,7 @@ import javax.swing.table.TableRowSorter;
 
 import org.slf4j.LoggerFactory;
 
+import com.chien.dao.CourseDAO;
 import com.chien.dao.ScoreDAO;
 import com.chien.dao.StudentDAO;
 
@@ -25,16 +27,18 @@ public class ScorePanel extends JPanel{
 	private static final long serialVersionUID = 298929672185156154L;
 	
 	private JTable table;
-	private JComboBox<String> group_case,scale_case;
+	private JComboBox<String> group_case,course_case,scale_case;
 	private JButton create,reflash,print;
 	
 	private ScoreDAO db_score;
 	private StudentDAO db_student;
+	private CourseDAO db_course;
 	
 	public ScorePanel(){
 		super(new BorderLayout());
 		db_score=new ScoreDAO();
 		db_student=new StudentDAO();
+		db_course=new CourseDAO();
 		
 		table=new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -61,6 +65,25 @@ public class ScorePanel extends JPanel{
 			}
 		});
 		p.add(scale_case);
+		course_case=new JComboBox<>();
+		course_case.addItem("全部");
+		course_case.setMaximumSize(new Dimension(5,5));
+		try{
+			cursor=db_course.getAll();
+			while(cursor.next()){
+				course_case.addItem(cursor.getString(2));
+			}
+		}catch(SQLException e){
+			LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
+		}
+		course_case.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				loadData();
+			}
+		});
+		p.add(course_case);
 		group_case=new JComboBox<>();
 		group_case.addItem("按学生查看");
 		group_case.addItem("按学院查看");
@@ -116,19 +139,20 @@ public class ScorePanel extends JPanel{
 		try{
 			String scale=(String)scale_case.getSelectedItem();
 			String type=(String)group_case.getSelectedItem();
+			String course=(String)course_case.getSelectedItem();
 			ResultSet cursor=null;
 			String column[]=null;
 			if(type.equals("按学生查看")){
-				cursor=db_score.getScoreGroupStudentId(scale);
+				cursor=db_score.getScoreGroupStudentId(scale,course);
 				column=new String[]{"学号","姓名","学院","专业","班级","课程","分数","及格率%"};
 			}else if(type.equals("按学院查看")){
-				cursor=db_score.getScoreGroupAcademyId(scale) ;
+				cursor=db_score.getScoreGroupAcademyId(scale,course) ;
 				column=new String[]{"学院","课程","分数","及格率"};
 			}else if(type.equals("按专业查看")){
-				cursor=db_score.getScoreGroupMajorId(scale);
+				cursor=db_score.getScoreGroupMajorId(scale,course);
 				column=new String[]{"学院","专业","课程","分数","及格率"};
 			}else if(type.equals("按班级查看")){
-				cursor=db_score.getScoreGroupClassId(scale);
+				cursor=db_score.getScoreGroupClassId(scale,course);
 				column=new String[]{"学院","专业","班级","课程","分数","及格率"};
 			}
 			if(cursor!=null){
