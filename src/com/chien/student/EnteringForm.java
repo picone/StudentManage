@@ -105,9 +105,10 @@ public class EnteringForm extends JFrame{
 				if(has_input){
 					db_score.insert(Long.parseLong(student_id.getText()),course_id,Integer.parseInt(score.getText()));
 					student_id.setText("");
-					score.setText("");
-					has_input=false;
 					student_name.setText("");
+					score.setText("");
+					student_id.requestFocus();
+					has_input=false;
 				}else{
 					JOptionPane.showMessageDialog(null,"请输入正确的学号");
 				}
