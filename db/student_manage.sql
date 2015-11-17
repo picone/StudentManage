@@ -31,12 +31,6 @@ CREATE TABLE IF NOT EXISTS `course` (
   `name` char(16) NOT NULL COMMENT '课程名称'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程信息表';
 
-CREATE TABLE IF NOT EXISTS `log` (
-  `logdate` text NOT NULL,
-  `classname` text NOT NULL,
-  `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 CREATE TABLE IF NOT EXISTS `logging_event` (
   `timestmp` bigint(20) NOT NULL,
   `formatted_message` text NOT NULL,
