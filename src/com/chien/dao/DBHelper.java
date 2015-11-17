@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.slf4j.LoggerFactory;
+
 public class DBHelper {
 	private static final String url="jdbc:mysql://127.0.0.1/student_manage";
 	private static final String type="com.mysql.jdbc.Driver";
@@ -16,15 +18,19 @@ public class DBHelper {
 	
 	/**
 	 * 构造函数,连接数据库
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public DBHelper(){
-		try{
+	public DBHelper() throws SQLException{
+		try {
 			Class.forName(type);
-			conn=DriverManager.getConnection(url,username,password);
-			stat=conn.createStatement();
-		}catch(Exception e){
+		} catch (ClassNotFoundException e) {
+			// TODO 自动生成的 catch 块
+			LoggerFactory.getLogger(DBHelper.class).error(e.toString());
 			e.printStackTrace();
 		}
+		conn=DriverManager.getConnection(url,username,password);
+		stat=conn.createStatement();
 	}
 	
 	public Connection getConnection(){
@@ -43,6 +49,7 @@ public class DBHelper {
 			conn.close();
 		} catch (SQLException e) {
 			// TODO 自动生成的 catch 块
+			LoggerFactory.getLogger(DBHelper.class).error(e.toString());
 			e.printStackTrace();
 		}
 	}

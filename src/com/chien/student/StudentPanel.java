@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.AcademyDAO;
 import com.chien.dao.ClassDAO;
 import com.chien.dao.MajorDAO;
@@ -74,7 +76,7 @@ public class StudentPanel extends JPanel{
 			}
 			cm.getColumn(3).setCellEditor(new DefaultCellEditor(cb));
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
 		}
 		
 		JScrollPane sp=new JScrollPane();
@@ -127,6 +129,7 @@ public class StudentPanel extends JPanel{
 					student.print();
 				} catch (PrinterException e1) {
 					// TODO 自动生成的 catch 块
+					LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
 					e1.printStackTrace();
 				}
 			}
@@ -145,7 +148,7 @@ public class StudentPanel extends JPanel{
 				student_model.addRow(row);
 			}
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
 		}
 		student_model.addTableModelListener(new MyTableModelListener());
 		student.setModel(student_model);
@@ -174,6 +177,7 @@ public class StudentPanel extends JPanel{
 							db_student.insert(student_id,(String)student_model.getValueAt(e.getFirstRow(),4),class_id,scale);
 						}
 					}catch(NumberFormatException ex){
+						LoggerFactory.getLogger(StudentPanel.class).info(e.toString());
 						JOptionPane.showMessageDialog(null,"请输入数字");
 					}
 				}

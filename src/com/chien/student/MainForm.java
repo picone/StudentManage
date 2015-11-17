@@ -9,7 +9,6 @@ import javax.swing.JTabbedPane;
 import com.chien.dao.UserDAO;
 
 public class MainForm extends JFrame{
-	
 	private static final long serialVersionUID = -3525935019398413594L;
 	
 	private int auth;
@@ -33,7 +32,7 @@ public class MainForm extends JFrame{
 		if((auth&8)==8)tb.addTab("课程",new CoursePanel());
 		if((auth&16)==16)tb.addTab("权限",new AuthPanel());
 		add(tb,BorderLayout.CENTER);
-		setJMenuBar(new MainMenuBar());
+		setJMenuBar(new MainMenuBar(this));
 		pack();
 		setLocationRelativeTo(null);
 	}

@@ -3,6 +3,8 @@ package com.chien.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.LoggerFactory;
+
 public class MajorDAO extends BaseDAO{
 	public MajorDAO(){
 		super("major");
@@ -16,7 +18,7 @@ public class MajorDAO extends BaseDAO{
 				result=data.getInt(1);
 			}
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(MajorDAO.class).error(e.toString());
 		}
 		return result;
 	}

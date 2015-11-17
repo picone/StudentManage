@@ -17,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.UserDAO;
 
 public class AuthPanel extends JPanel{
@@ -66,6 +68,7 @@ public class AuthPanel extends JPanel{
 						dtm.removeRow(table.getSelectedRow());
 						JOptionPane.showMessageDialog(null,"删除成功");
 					}catch(SQLException ex){
+						LoggerFactory.getLogger(AuthPanel.class).error(e.toString());
 						JOptionPane.showMessageDialog(null,"删除失败");
 					}
 				}
@@ -95,7 +98,7 @@ public class AuthPanel extends JPanel{
 						JOptionPane.showMessageDialog(null,"保存成功");
 					}
 				}catch(SQLException | NoSuchAlgorithmException ex){
-					
+					LoggerFactory.getLogger(AuthPanel.class).error(e.toString());
 				}
 			}
 		});
@@ -126,7 +129,7 @@ public class AuthPanel extends JPanel{
 			table.setModel(dtm);
 			tcm=table.getColumnModel();
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(AuthPanel.class).error(e.toString());
 		}
 	}
 }

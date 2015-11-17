@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.model.MD5;
 
 public class UserDAO extends BaseDAO{
@@ -30,7 +32,7 @@ public class UserDAO extends BaseDAO{
 				}
 			}
 		}catch(SQLException|NoSuchAlgorithmException e){
-			
+			LoggerFactory.getLogger(UserDAO.class).error(e.toString());
 		}
 		return 0;
 	}
@@ -41,7 +43,7 @@ public class UserDAO extends BaseDAO{
 			stmt.setInt(1,uid);
 			return stmt.executeQuery();
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(UserDAO.class).error(e.toString());
 		}
 		return null;
 	}
@@ -55,7 +57,7 @@ public class UserDAO extends BaseDAO{
 				return data.getInt(1);
 			}
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(UserDAO.class).error(e.toString());
 		}
 		return 0;
 	}

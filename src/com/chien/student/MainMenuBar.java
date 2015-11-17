@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -15,11 +16,19 @@ import javax.swing.event.MenuListener;
 public class MainMenuBar extends JMenuBar{
 	private static final long serialVersionUID = -5591067543500678011L;
 
-	public MainMenuBar(){
+	public MainMenuBar(JFrame frame){
 		super();
 		JMenu menu=new JMenu("文件(F)");
 		menu.setMnemonic('F');
 		JMenuItem item=new JMenuItem("注销");
+		item.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				frame.dispose();
+				new LoginForm().setVisible(true);
+			}
+		});
 		menu.add(item);
 		item=new JMenuItem("退出(E)",'E');
 		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));

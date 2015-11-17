@@ -16,6 +16,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.ScoreDAO;
 import com.chien.dao.StudentDAO;
 
@@ -49,7 +51,7 @@ public class ScorePanel extends JPanel{
 				scale_case.addItem(cursor.getString(1));
 			}
 		}catch (SQLException e) {
-			
+			LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
 		}
 		scale_case.addActionListener(new ActionListener(){
 			@Override
@@ -103,6 +105,7 @@ public class ScorePanel extends JPanel{
 					table.print();
 				} catch (PrinterException e1) {
 					// TODO 自动生成的 catch 块
+					LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
 					e1.printStackTrace();
 				}
 			}
@@ -141,7 +144,7 @@ public class ScorePanel extends JPanel{
 				table.setRowSorter(new TableRowSorter<DefaultTableModel>(tm));
 			}
 		} catch (SQLException e) {
-			System.out.println(e.toString());
+			LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
 		}
 		System.gc();
 	}

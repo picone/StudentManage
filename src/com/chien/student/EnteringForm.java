@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.CourseDAO;
 import com.chien.dao.ScoreDAO;
 import com.chien.dao.StudentDAO;
@@ -49,7 +51,7 @@ public class EnteringForm extends JFrame{
 				course.addItem(cursor.getString(2));
 			}
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(EnteringForm.class).error(e.toString());
 		}
 		course.addActionListener(new ActionListener(){
 			@Override

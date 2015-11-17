@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.CourseDAO;
 
 public class CoursePanel extends JPanel{
@@ -119,7 +121,7 @@ public class CoursePanel extends JPanel{
 			}
 			list.setListData(course_data);
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(CoursePanel.class).error(e.toString());
 		}
 	}
 }

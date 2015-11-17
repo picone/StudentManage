@@ -17,6 +17,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.slf4j.LoggerFactory;
+
 import com.chien.dao.AcademyDAO;
 import com.chien.dao.ClassDAO;
 import com.chien.dao.MajorDAO;
@@ -102,7 +104,7 @@ public class ClassPanel extends JPanel{
 				break;
 			}
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
 		}
 	}
 	
@@ -136,7 +138,7 @@ public class ClassPanel extends JPanel{
 							}
 							loadData(selected_list);
 						}catch(SQLException ex){
-							
+							LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
 						}
 					}
 				}
@@ -167,7 +169,7 @@ public class ClassPanel extends JPanel{
 						}
 						loadData(selected_list);
 					}catch(SQLException ex){
-						
+						LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
 					}
 				}
 			});
@@ -204,7 +206,7 @@ public class ClassPanel extends JPanel{
 						}
 						loadData(selected_list);
 					}catch(SQLException ex){
-						
+						LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
 					}
 				}
 			});

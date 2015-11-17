@@ -3,6 +3,8 @@ package com.chien.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.LoggerFactory;
+
 public class CourseDAO extends BaseDAO{
 	public CourseDAO(){
 		super("course");
@@ -16,7 +18,7 @@ public class CourseDAO extends BaseDAO{
 				result=data.getInt(1);
 			}
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(CourseDAO.class).error(e.toString());
 		}
 		return result;
 	}
@@ -29,7 +31,7 @@ public class CourseDAO extends BaseDAO{
 				stat.execute("UPDATE course SET name='"+name+"' WHERE course_id="+course_id);
 			}
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(CourseDAO.class).error(e.toString());
 		}
 		return false;
 	}
@@ -38,7 +40,7 @@ public class CourseDAO extends BaseDAO{
 		try{
 			return stat.execute("DELETE FROM course WHERE course_id="+course_id);
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(CourseDAO.class).error(e.toString());
 		}
 		return false;
 	}

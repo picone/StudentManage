@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.LoggerFactory;
+
 public class StudentDAO extends BaseDAO{
 	public StudentDAO(){
 		super("student");
@@ -17,7 +19,7 @@ public class StudentDAO extends BaseDAO{
 		try {
 			return stat.execute("DELETE FROM student WHERE student_id="+student_id);
 		} catch (SQLException e) {
-			
+			LoggerFactory.getLogger(StudentDAO.class).error(e.toString());
 		}
 		return false;
 	}
@@ -31,7 +33,7 @@ public class StudentDAO extends BaseDAO{
 			stat.setInt(4,scale);
 			return stat.execute();
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(StudentDAO.class).error(e.toString());
 		}
 		return false;
 	}
@@ -47,7 +49,7 @@ public class StudentDAO extends BaseDAO{
 				return cursor.getString(1);
 			}
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(StudentDAO.class).error(e.toString());
 		}
 		return null;
 	}

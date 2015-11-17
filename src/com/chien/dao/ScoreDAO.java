@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.LoggerFactory;
+
 public class ScoreDAO extends BaseDAO{
 	public ScoreDAO(){
 		super("score");
@@ -33,7 +35,7 @@ public class ScoreDAO extends BaseDAO{
 			stat.setInt(3,score);
 			return stat.execute();
 		}catch(SQLException e){
-			
+			LoggerFactory.getLogger(ScoreDAO.class).error(e.toString());
 		}
 		return false;
 	}
