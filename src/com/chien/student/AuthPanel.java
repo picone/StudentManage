@@ -38,11 +38,11 @@ public class AuthPanel extends JPanel{
 		create=new JButton("添加");
 		delete=new JButton("删除");
 		save=new JButton("保存");
-		
+		//添加表格
 		JScrollPane sp=new JScrollPane();
 		sp.setViewportView(table);
 		add(sp,BorderLayout.WEST);
-		
+		//添加右侧创建,删除,保存按钮
 		JPanel p=new JPanel(new VFlowLayout());
 		p.add(create);
 		p.add(delete);
@@ -80,6 +80,7 @@ public class AuthPanel extends JPanel{
 				// TODO 自动生成的方法存根
 				int auth=0,row=table.getSelectedRow();
 				String id=(String)table.getValueAt(row,0),name=(String)table.getValueAt(row,1);
+				//计算权限值
 				if((boolean)table.getValueAt(row,2))auth+=1;
 				if((boolean)table.getValueAt(row,3))auth+=2;
 				if((boolean)table.getValueAt(row,4))auth+=4;
@@ -102,7 +103,9 @@ public class AuthPanel extends JPanel{
 				}
 			}
 		});
+		//加载数据
 		loadData();
+		//设置2到6列是Checkbox类型的Editor和Renderer
 		for(int i=2;i<=6;i++){
 			tcm.getColumn(i).setCellEditor(new DefaultCellEditor(new JCheckBox()));
 			tcm.getColumn(i).setCellRenderer(new CheckBoxRenderer());

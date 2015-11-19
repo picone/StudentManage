@@ -10,6 +10,11 @@ public class AcademyDAO extends BaseDAO{
 		super("academy");
 	}
 	
+	/**
+	 * 获取学院的ID
+	 * @param name
+	 * @return
+	 */
 	public int getId(String name){
 		int result=0;
 		try {
@@ -23,6 +28,11 @@ public class AcademyDAO extends BaseDAO{
 		return result;
 	}
 	
+	/**
+	 * @param name
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean delete(String name) throws SQLException{
 		return stat.execute("DELETE FROM academy WHERE name='"+name+"'");
 	}

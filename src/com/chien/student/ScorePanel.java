@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Comparator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -42,6 +43,7 @@ public class ScorePanel extends JPanel{
 		
 		table=new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setAutoCreateRowSorter(true);
 		JScrollPane sp=new JScrollPane();
 		sp.setViewportView(table);
 		add(BorderLayout.WEST,sp);
@@ -144,32 +146,45 @@ public class ScorePanel extends JPanel{
 			String column[]=null;
 			if(type.equals("按学生查看")){
 				cursor=db_score.getScoreGroupStudentId(scale,course);
-				column=new String[]{"学号","姓名","学院","专业","班级","课程","分数","及格率%"};
+				column=new String[]{"学号","姓名","学院","专业","班级","课程","分数","不及格率%"};
 			}else if(type.equals("按学院查看")){
 				cursor=db_score.getScoreGroupAcademyId(scale,course) ;
-				column=new String[]{"学院","课程","分数","及格率"};
+				column=new String[]{"学院","课程","分数","不及格率"};
 			}else if(type.equals("按专业查看")){
 				cursor=db_score.getScoreGroupMajorId(scale,course);
-				column=new String[]{"学院","专业","课程","分数","及格率"};
+				column=new String[]{"学院","专业","课程","分数","不及格率"};
 			}else if(type.equals("按班级查看")){
 				cursor=db_score.getScoreGroupClassId(scale,course);
-				column=new String[]{"学院","专业","班级","课程","分数","及格率"};
+				column=new String[]{"学院","专业","班级","课程","分数","不及格率"};
 			}
 			if(cursor!=null){
 				DefaultTableModel tm=new DefaultTableModel(column,0);
 				while(cursor.next()){
-					String[] row=new String[column.length];
-					for(int i=0;i<column.length;i++){
+					Object[] row=new Object[column.length];
+					for(int i=0;i<column.length-2;i++){
 						row[i]=cursor.getString(i+1);
 					}
+					row[column.length-2]=cursor.getFloat(column.length-1);
+					row[column.length-1]=cursor.getFloat(column.length);
 					tm.addRow(row);
 				}
 				table.setModel(tm);
-				table.setRowSorter(new TableRowSorter<DefaultTableModel>(tm));
+				TableRowSorter<DefaultTableModel> sorter=new TableRowSorter<>(tm);
+				sorter.setComparator(column.length-2,new OrderNumberComparator());
+				sorter.setComparator(column.length-1,new OrderNumberComparator());
+				table.setRowSorter(sorter);
 			}
 		} catch (SQLException e) {
 			LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
 		}
 		System.gc();
+	}
+	
+	private class OrderNumberComparator implements Comparator<Object>{
+		@Override
+		public int compare(Object o1, Object o2) {
+			// TODO 自动生成的方法存根
+			return (int)((float)o1-(float)o2);
+		}
 	}
 }

@@ -7,6 +7,10 @@ import java.sql.Statement;
 
 import com.chien.student.Main;
 
+/**
+ * @author chien
+ *数据库基础类
+ */
 public class BaseDAO {
 	protected DBHelper DB;
 	protected Connection conn;
@@ -20,6 +24,11 @@ public class BaseDAO {
 		this.table_name=table_name;
 	}
 	
+	/**
+	 * 获取表中所有记录
+	 * @return ResultSet 记录集
+	 * @throws SQLException
+	 */
 	public ResultSet getAll() throws SQLException{
 		return stat.executeQuery("SELECT * FROM "+table_name);
 	}

@@ -49,7 +49,7 @@ public class ClassPanel extends JPanel{
 		major_list=new JList<>();
 		class_list=new JList<>();
 		list_menu=new ListMenu();
-		
+		//添加学院,专业,班级的List
 		add(academy_list);
 		add(major_list);
 		add(class_list);

@@ -7,18 +7,20 @@ import java.sql.Statement;
 
 import org.slf4j.LoggerFactory;
 
+/**
+ * 数据库连接类
+ */
 public class DBHelper {
-	private static final String url="jdbc:mysql://127.0.0.1/student_manage";
-	private static final String type="com.mysql.jdbc.Driver";
-	private static final String username="root";
-	private static final String password="86760385";
+	private static final String url="jdbc:mysql://127.0.0.1/student_manage";//数据库地址
+	private static final String type="com.mysql.jdbc.Driver";//使用的数据库类型
+	private static final String username="root";//数据库用户名
+	private static final String password="86760385";//数据库密码
 	
 	protected Connection conn;
 	protected Statement stat;
 	
 	/**
 	 * 构造函数,连接数据库
-	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
 	public DBHelper() throws SQLException{
@@ -33,10 +35,16 @@ public class DBHelper {
 		stat=conn.createStatement();
 	}
 	
+	/**
+	 * @return Connection 返回当前数据库连接
+	 */
 	public Connection getConnection(){
 		return conn;
 	}
 	
+	/**
+	 * @return Statement 返回当前数据库执行对象
+	 */
 	public Statement getStat(){
 		return stat;
 	}

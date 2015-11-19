@@ -5,11 +5,19 @@ import java.sql.SQLException;
 
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author chien
+ *课程表操作类
+ */
 public class CourseDAO extends BaseDAO{
 	public CourseDAO(){
 		super("course");
 	}
 	
+	/**
+	 * @param name 课程名字
+	 * @return 课程的ID
+	 */
 	public int getId(String name){
 		int result=0;
 		try {
@@ -23,6 +31,11 @@ public class CourseDAO extends BaseDAO{
 		return result;
 	}
 	
+	/**
+	 * @param course_id 课程的ID
+	 * @param name 课程的名字
+	 * @return 替换的结果
+	 */
 	public boolean insert(int course_id,String name){
 		try{
 			if(course_id==0){
@@ -36,6 +49,10 @@ public class CourseDAO extends BaseDAO{
 		return false;
 	}
 	
+	/**
+	 * @param course_id 课程的ID
+	 * @return 删除的结果
+	 */
 	public boolean delete(int course_id){
 		try{
 			return stat.execute("DELETE FROM course WHERE course_id="+course_id);

@@ -9,12 +9,15 @@ public class NumberLimitedDoc extends PlainDocument{
 	
 	private int limit;
 	
+	/**
+	 * @param int limit 限制的位数
+	 */
 	public NumberLimitedDoc(int limit){
 		super();
 		this.limit=limit;
 	}
 	
-	   @Override
+	@Override
 	public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
 		// TODO 自动生成的方法存根
 		if(str!=null&&getLength()+str.length()<=limit){
