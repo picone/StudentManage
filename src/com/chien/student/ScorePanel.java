@@ -40,14 +40,14 @@ public class ScorePanel extends JPanel{
 		db_score=new ScoreDAO();
 		db_student=new StudentDAO();
 		db_course=new CourseDAO();
-		
+		//添加表格
 		table=new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setAutoCreateRowSorter(true);
 		JScrollPane sp=new JScrollPane();
 		sp.setViewportView(table);
 		add(BorderLayout.WEST,sp);
-		
+		//添加右侧按钮及选择列表
 		JPanel p=new JPanel(new VFlowLayout());
 		scale_case=new JComboBox<>();
 		ResultSet cursor;
@@ -169,9 +169,11 @@ public class ScorePanel extends JPanel{
 					tm.addRow(row);
 				}
 				table.setModel(tm);
+				//设置表头排序
 				TableRowSorter<DefaultTableModel> sorter=new TableRowSorter<>(tm);
-				sorter.setComparator(column.length-2,new OrderNumberComparator());
-				sorter.setComparator(column.length-1,new OrderNumberComparator());
+				OrderNumberComparator comparator=new OrderNumberComparator(); 
+				sorter.setComparator(column.length-2,comparator);
+				sorter.setComparator(column.length-1,comparator);
 				table.setRowSorter(sorter);
 			}
 		} catch (SQLException e) {

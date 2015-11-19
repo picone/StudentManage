@@ -78,11 +78,11 @@ public class StudentPanel extends JPanel{
 		} catch (SQLException e) {
 			LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
 		}
-		
+		//添加表格
 		JScrollPane sp=new JScrollPane();
 		sp.setViewportView(student);
 		add(BorderLayout.WEST,sp);
-		
+		//添加右侧按钮
 		JPanel box=new JPanel(new VFlowLayout());
 		create=new JButton("添加");
 		box.add(create);
@@ -168,7 +168,7 @@ public class StudentPanel extends JPanel{
 						break;
 					}
 				}
-				if(is_finish){
+				if(is_finish){//当数据输入完整时
 					try{
 						long student_id=Long.parseLong((String) student_model.getValueAt(e.getFirstRow(),0));
 						int class_id=db_class.getId((String) student_model.getValueAt(e.getFirstRow(),3));

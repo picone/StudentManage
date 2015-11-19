@@ -43,7 +43,6 @@ public class EnteringForm extends JFrame{
 		db_student=new StudentDAO();
 		//初始化界面
 		setTitle("成绩录入");
-		
 		course=new JComboBox<>();
 		try {
 			ResultSet cursor=db_course.getAll();
@@ -62,7 +61,7 @@ public class EnteringForm extends JFrame{
 		});
 		course_id=db_course.getId((String) course.getSelectedItem());
 		add(course,BorderLayout.NORTH);
-		
+		//添加中间的JPanel
 		JPanel p=new JPanel();
 		p.add(new JLabel("学号"));
 		student_id=new JTextField(9);
@@ -71,6 +70,7 @@ public class EnteringForm extends JFrame{
 		p.add(new JLabel("分数"));
 		score=new JTextField(3);
 		score.setDocument(new NumberLimitedDoc(3));
+		//设置当成绩输入框获得焦点时获取学生姓名
 		score.addFocusListener(new FocusListener(){
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -84,18 +84,14 @@ public class EnteringForm extends JFrame{
 					has_input=true;
 				}
 			}
-
 			@Override
-			public void focusLost(FocusEvent e) {
-				// TODO 自动生成的方法存根
-				
-			}
+			public void focusLost(FocusEvent e) {}
 		});
 		p.add(score);
 		student_name=new JLabel("请输入");
 		p.add(student_name);
 		add(p,BorderLayout.CENTER);
-		
+		//添加底部的按钮
 		create=new JButton("录入");
 		add(create,BorderLayout.SOUTH);
 		create.addActionListener(new ActionListener(){
@@ -114,8 +110,7 @@ public class EnteringForm extends JFrame{
 				}
 			}
 		});
-		getRootPane().setDefaultButton(create);
-		
+		getRootPane().setDefaultButton(create);//设置默认的回车键动作按钮
 		pack();
 		setLocationRelativeTo(null);
 	}
