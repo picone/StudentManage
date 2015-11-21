@@ -1,9 +1,12 @@
 package com.chien.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 import org.slf4j.LoggerFactory;
 
@@ -11,10 +14,10 @@ import org.slf4j.LoggerFactory;
  * 数据库连接类
  */
 public class DBHelper {
-	private static final String url="jdbc:mysql://127.0.0.1/student_manage";//数据库地址
-	private static final String type="com.mysql.jdbc.Driver";//使用的数据库类型
-	private static final String username="root";//数据库用户名
-	private static final String password="86760385";//数据库密码
+	private static String url="jdbc:mysql://127.0.0.1/student_manage";//数据库地址
+	private static String type="com.mysql.jdbc.Driver";//使用的数据库类型
+	private static String username;//数据库用户名
+	private static String password;//数据库密码
 	
 	protected Connection conn;
 	protected Statement stat;
@@ -25,8 +28,15 @@ public class DBHelper {
 	 */
 	public DBHelper() throws SQLException{
 		try {
+			Properties setting=new Properties();
+			InputStream file=Object.class.getResourceAsStream("/database.properties");
+			setting.load(file);
+			url="jdbc:mysql://"+setting.getProperty("ip").trim()+":"+setting.getProperty("port").trim()+"/"+setting.getProperty("database").trim();
+			username=setting.getProperty("username").trim();
+			password=setting.getProperty("password").trim();
+			file.close();
 			Class.forName(type);
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | IOException e) {
 			// TODO 自动生成的 catch 块
 			LoggerFactory.getLogger(DBHelper.class).error(e.toString());
 			e.printStackTrace();
