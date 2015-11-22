@@ -160,7 +160,7 @@ public class StudentPanel extends JPanel{
 		@Override
 		public void tableChanged(TableModelEvent e) {
 			// TODO 自动生成的方法存根
-			if(e.getFirstRow()>0){
+			if(e.getFirstRow()>0&&e.getFirstRow()<student.getRowCount()){
 				boolean is_finish=true;
 				for(int i=0;i<6;i++){
 					if(student_model.getValueAt(e.getFirstRow(),i).equals("")){

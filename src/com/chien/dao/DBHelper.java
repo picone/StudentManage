@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * 数据库连接类
  */
 public class DBHelper {
-	private static String url="jdbc:mysql://127.0.0.1/student_manage";//数据库地址
+	private static String url;//数据库地址
 	private static String type="com.mysql.jdbc.Driver";//使用的数据库类型
 	private static String username;//数据库用户名
 	private static String password;//数据库密码
