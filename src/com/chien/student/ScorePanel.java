@@ -146,7 +146,7 @@ public class ScorePanel extends JPanel{
 			String column[]=null;
 			if(type.equals("按学生查看")){
 				cursor=db_score.getScoreGroupStudentId(scale,course);
-				column=new String[]{"学号","姓名","学院","专业","班级","课程","分数","不及格率%"};
+				column=new String[]{"学号","姓名","学院","专业","班级","课程","分数","不及格率"};
 			}else if(type.equals("按学院查看")){
 				cursor=db_score.getScoreGroupAcademyId(scale,course) ;
 				column=new String[]{"学院","课程","分数","不及格率"};

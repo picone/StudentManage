@@ -38,19 +38,15 @@ public class StudentDAO extends BaseDAO{
 	 * @param c 学生班级ID
 	 * @param scale 学生的年级
 	 * @return 插入的结果
+	 * @throws SQLException 
 	 */
-	public boolean insert(long id,String name,int c,int scale){
-		try{
-			PreparedStatement stat=conn.prepareStatement("REPLACE INTO student (student_id,name,class_id,scale) VALUES (?,?,?,?)");
-			stat.setLong(1,id);
-			stat.setString(2,name);
-			stat.setInt(3,c);
-			stat.setInt(4,scale);
-			return stat.execute();
-		}catch(SQLException e){
-			LoggerFactory.getLogger(StudentDAO.class).error(e.toString());
-		}
-		return false;
+	public boolean insert(long id,String name,int c,int scale) throws SQLException{
+		PreparedStatement stat=conn.prepareStatement("INSERT INTO student (student_id,name,class_id,scale) VALUES (?,?,?,?)");
+		stat.setLong(1,id);
+		stat.setString(2,name);
+		stat.setInt(3,c);
+		stat.setInt(4,scale);
+		return stat.execute();
 	}
 	
 	/**

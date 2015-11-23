@@ -55,29 +55,7 @@ public class StudentPanel extends JPanel{
 		student=new JTable();
 		student.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loadData();
-		TableColumnModel cm=student.getColumnModel();
-		try {
-			JComboBox<String> cb=new JComboBox<>();
-			ResultSet data=db_academy.getAll();
-			while(data.next()){
-				cb.addItem(data.getString(2));
-			}
-			cm.getColumn(1).setCellEditor(new DefaultCellEditor(cb));
-			data=db_major.getAll();
-			cb=new JComboBox<>();
-			while(data.next()){
-				cb.addItem(data.getString(3));
-			}
-			cm.getColumn(2).setCellEditor(new DefaultCellEditor(cb));
-			data=db_class.getAll();
-			cb=new JComboBox<>();
-			while(data.next()){
-				cb.addItem(data.getString(3));
-			}
-			cm.getColumn(3).setCellEditor(new DefaultCellEditor(cb));
-		} catch (SQLException e) {
-			LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
-		}
+		loadColumn();
 		//添加表格
 		JScrollPane sp=new JScrollPane();
 		sp.setViewportView(student);
@@ -119,6 +97,7 @@ public class StudentPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				loadData();
+				loadColumn();
 			}
 		});
 		print.addActionListener(new ActionListener(){
@@ -153,14 +132,60 @@ public class StudentPanel extends JPanel{
 		student_model.addTableModelListener(new MyTableModelListener());
 		student.setModel(student_model);
 		student.setRowSorter(new TableRowSorter<DefaultTableModel>(student_model));
-		System.gc();
+	}
+	
+	private void loadColumn(){
+		TableColumnModel cm=student.getColumnModel();
+		final JComboBox<String> cb_academy=new JComboBox<>();
+		try {
+			ResultSet data=db_academy.getAll();
+			while(data.next()){
+				cb_academy.addItem(data.getString(2));
+			}
+		}catch(SQLException e){
+			LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
+		}
+		cm.getColumn(1).setCellEditor(new DefaultCellEditor(cb_academy));
+		cb_academy.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				final JComboBox<String> cb_major=new JComboBox<>();
+				try{
+					ResultSet data=db_major.getAll((String)cb_academy.getSelectedItem());
+					while(data.next()){
+						cb_major.addItem(data.getString(1));
+					}
+				}catch(SQLException ex){
+					LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
+				}
+				cm.getColumn(2).setCellEditor(new DefaultCellEditor(cb_major));
+				cb_major.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO 自动生成的方法存根
+						JComboBox<String> cb_class=new JComboBox<>();
+						try{
+							ResultSet data=db_class.getAll((String)cb_major.getSelectedItem());
+							while(data.next()){
+								cb_class.addItem(data.getString(1));
+							}
+						}catch(SQLException ex){
+							LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
+						}
+						cm.getColumn(3).setCellEditor(new DefaultCellEditor(cb_class));
+					}
+				});
+			}
+		});
 	}
 	
 	private class MyTableModelListener implements TableModelListener{
 		@Override
 		public void tableChanged(TableModelEvent e) {
 			// TODO 自动生成的方法存根
-			if(e.getFirstRow()>0&&e.getFirstRow()<student.getRowCount()){
+			int col=e.getColumn(),row=e.getFirstRow();
+			if((col==0||col==4||col==5)&&row>0&&row<student.getRowCount()){
 				boolean is_finish=true;
 				for(int i=0;i<6;i++){
 					if(student_model.getValueAt(e.getFirstRow(),i).equals("")){
@@ -179,6 +204,9 @@ public class StudentPanel extends JPanel{
 					}catch(NumberFormatException ex){
 						LoggerFactory.getLogger(StudentPanel.class).info(e.toString());
 						JOptionPane.showMessageDialog(null,"请输入数字");
+					}catch(SQLException ex){
+						LoggerFactory.getLogger(StudentPanel.class).info(e.toString());
+						JOptionPane.showMessageDialog(null,"学生已存在");
 					}
 				}
 			}

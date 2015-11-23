@@ -31,7 +31,7 @@ public class DBHelper {
 			Properties setting=new Properties();
 			InputStream file=Object.class.getResourceAsStream("/database.properties");
 			setting.load(file);
-			url="jdbc:mysql://"+setting.getProperty("ip").trim()+":"+setting.getProperty("port").trim()+"/"+setting.getProperty("database").trim();
+			url="jdbc:mysql://"+setting.getProperty("ip").trim()+":"+setting.getProperty("port").trim()+"/"+setting.getProperty("database").trim()+"?useUnicode=true&characterEncoding=utf8";
 			username=setting.getProperty("username").trim();
 			password=setting.getProperty("password").trim();
 			file.close();
