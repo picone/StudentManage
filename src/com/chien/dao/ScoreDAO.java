@@ -26,7 +26,7 @@ public class ScoreDAO extends BaseDAO{
 		if(course_name.equals("全部")){
 			return stat.executeQuery("SELECT score_view.student_id,student_name,academy_name,major_name,class_name,GROUP_CONCAT(course_name),AVG(score) AS score,(1-pass/count(score_view.student_id))*100 FROM score_view JOIN (SELECT count(student_id) AS pass,student_id FROM score_view WHERE score>=60 AND scale="+scale+(course_name.equals("全部")?"":" AND course_name='"+course_name+"'")+" GROUP BY student_id) AS pass ON pass.student_id=score_view.student_id WHERE scale="+scale+(course_name.equals("全部")?"":" AND course_name='"+course_name+"'")+" GROUP BY score_view.student_id ORDER BY score DESC");			
 		}else{
-			return stat.executeQuery("SELECT score_view.student_id,student_name,academy_name,major_name,class_name,course_name,score,IF(score>=60,100,0) FROM score_view WHERE scale="+scale+" AND course_name='"+course_name+"' GROUP BY student_id");
+			return stat.executeQuery("SELECT score_view.student_id,student_name,academy_name,major_name,class_name,course_name,score,IF(score>=60,0,100) FROM score_view WHERE scale="+scale+" AND course_name='"+course_name+"' GROUP BY student_id");
 		}
 	}
 	

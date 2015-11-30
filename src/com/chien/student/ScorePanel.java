@@ -14,7 +14,9 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -29,7 +31,8 @@ public class ScorePanel extends JPanel{
 	
 	private JTable table;
 	private JComboBox<String> group_case,course_case,scale_case;
-	private JButton create,reflash,print;
+	private JButton search,create,reflash,print;
+	private JTextField keyword;
 	
 	private ScoreDAO db_score;
 	private StudentDAO db_student;
@@ -99,6 +102,12 @@ public class ScorePanel extends JPanel{
 			}}
 		);
 		p.add(group_case);
+		JPanel box=new JPanel();
+		keyword=new JTextField(9);
+		search=new JButton("搜索");
+		box.add(keyword);
+		box.add(search);
+		p.add(box);
 		create=new JButton("录入");
 		p.add(create);
 		reflash=new JButton("刷新");
@@ -108,6 +117,13 @@ public class ScorePanel extends JPanel{
 		add(BorderLayout.EAST,p);
 		loadData();
 		
+		search.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				((TableRowSorter<?>)table.getRowSorter()).setRowFilter(RowFilter.regexFilter(keyword.getText()));
+			}
+		});
 		create.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -130,8 +146,7 @@ public class ScorePanel extends JPanel{
 					table.print();
 				} catch (PrinterException e1) {
 					// TODO 自动生成的 catch 块
-					LoggerFactory.getLogger(ScorePanel.class).error(e.toString());
-					e1.printStackTrace();
+					LoggerFactory.getLogger(ScorePanel.class).error(e1.toString());
 				}
 			}
 		});

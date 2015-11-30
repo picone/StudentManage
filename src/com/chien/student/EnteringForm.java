@@ -75,13 +75,15 @@ public class EnteringForm extends JFrame{
 			@Override
 			public void focusGained(FocusEvent e) {
 				// TODO 自动生成的方法存根
-				String name=db_student.getName(student_id.getText());
-				if(name==null||name.equals("")){
-					student_name.setText("不存在");
-					has_input=false;
-				}else{
-					student_name.setText(name);
-					has_input=true;
+				if(!student_id.getText().equals("")){
+					String name=db_student.getName(student_id.getText());
+					if(name==null||name.equals("")){
+						student_name.setText("不存在");
+						has_input=false;
+					}else{
+						student_name.setText(name);
+						has_input=true;
+					}
 				}
 			}
 			@Override

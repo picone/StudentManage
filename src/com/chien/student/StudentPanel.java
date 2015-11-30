@@ -15,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -35,7 +37,8 @@ public class StudentPanel extends JPanel{
 	
 	private JTable student;
 	private DefaultTableModel student_model;
-	private JButton create,delete,reflash,print;
+	private JButton search,create,delete,reflash,print;
+	private JTextField keyword;
 	
 	private StudentDAO db_student;
 	private AcademyDAO db_academy;
@@ -54,6 +57,7 @@ public class StudentPanel extends JPanel{
 		
 		student=new JTable();
 		student.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		student.setAutoCreateRowSorter(true);
 		loadData();
 		loadColumn();
 		//添加表格
@@ -62,6 +66,12 @@ public class StudentPanel extends JPanel{
 		add(BorderLayout.WEST,sp);
 		//添加右侧按钮
 		JPanel box=new JPanel(new VFlowLayout());
+		JPanel p=new JPanel();
+		keyword=new JTextField(7);
+		search=new JButton("搜索");
+		p.add(keyword);
+		p.add(search);
+		box.add(p);
 		create=new JButton("添加");
 		box.add(create);
 		delete=new JButton("删除");
@@ -72,6 +82,13 @@ public class StudentPanel extends JPanel{
 		box.add(print);
 		add(BorderLayout.EAST,box);
 		
+		search.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO 自动生成的方法存根
+				((TableRowSorter<?>)student.getRowSorter()).setRowFilter(RowFilter.regexFilter(keyword.getText()));
+			}
+		});
 		create.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -85,9 +102,9 @@ public class StudentPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO 自动生成的方法存根
 				int row=student.getSelectedRow();
-				if(row>=0&&JOptionPane.showConfirmDialog(null,"你确定要删除学生"+student_model.getValueAt(row,4)+"?","警告",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
-					db_student.delete((String) student_model.getValueAt(row,0));
-					student_model.removeRow(row);
+				if(row>=0&&JOptionPane.showConfirmDialog(null,"你确定要删除学生"+student.getValueAt(row,4)+"?","警告",JOptionPane.YES_NO_OPTION)==JOptionPane.OK_OPTION){
+					db_student.delete((String) student.getValueAt(row,0));
+					loadData();
 					JOptionPane.showMessageDialog(null,"删除成功!");
 				}
 			}
@@ -106,10 +123,9 @@ public class StudentPanel extends JPanel{
 				// TODO 自动生成的方法存根
 				try {
 					student.print();
-				} catch (PrinterException e1) {
+				} catch (PrinterException ex){
 					// TODO 自动生成的 catch 块
-					LoggerFactory.getLogger(StudentPanel.class).error(e.toString());
-					e1.printStackTrace();
+					LoggerFactory.getLogger(StudentPanel.class).error(ex.toString());
 				}
 			}
 		});
@@ -131,7 +147,6 @@ public class StudentPanel extends JPanel{
 		}
 		student_model.addTableModelListener(new MyTableModelListener());
 		student.setModel(student_model);
-		student.setRowSorter(new TableRowSorter<DefaultTableModel>(student_model));
 	}
 	
 	private void loadColumn(){
@@ -202,10 +217,10 @@ public class StudentPanel extends JPanel{
 							db_student.insert(student_id,(String)student_model.getValueAt(e.getFirstRow(),4),class_id,scale);
 						}
 					}catch(NumberFormatException ex){
-						LoggerFactory.getLogger(StudentPanel.class).info(e.toString());
+						LoggerFactory.getLogger(StudentPanel.class).info(ex.toString());
 						JOptionPane.showMessageDialog(null,"请输入数字");
 					}catch(SQLException ex){
-						LoggerFactory.getLogger(StudentPanel.class).info(e.toString());
+						LoggerFactory.getLogger(StudentPanel.class).info(ex.toString());
 						JOptionPane.showMessageDialog(null,"学生已存在");
 					}
 				}

@@ -130,15 +130,23 @@ public class ClassPanel extends JPanel{
 								db_academy.insert(name);
 								break;
 							case 2:
-								db_major.insert(db_academy.getId(academy_list.getSelectedValue()),name);
+								if(academy_list.isSelectionEmpty()){
+									JOptionPane.showMessageDialog(null,"请选择学院");
+								}else{
+									db_major.insert(db_academy.getId(academy_list.getSelectedValue()),name);
+								}
 								break;
 							case 3:
-								db_class.insert(db_major.getId(major_list.getSelectedValue()),name);
+								if(major_list.isSelectionEmpty()){
+									JOptionPane.showMessageDialog(null,"请选择专业");
+								}else{
+									db_class.insert(db_major.getId(major_list.getSelectedValue()),name);
+								}
 								break;
 							}
 							loadData(selected_list);
 						}catch(SQLException ex){
-							LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
+							LoggerFactory.getLogger(ClassPanel.class).error(ex.toString());
 						}
 					}
 				}
@@ -169,7 +177,7 @@ public class ClassPanel extends JPanel{
 						}
 						loadData(selected_list);
 					}catch(SQLException ex){
-						LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
+						LoggerFactory.getLogger(ClassPanel.class).error(ex.toString());
 					}
 				}
 			});
@@ -184,29 +192,35 @@ public class ClassPanel extends JPanel{
 						switch(selected_list){
 						case 1:
 							before=academy_list.getSelectedValue();
-							name=JOptionPane.showInputDialog(null,"请输入名字",academy_list.getSelectedValue());
-							if(name!=null&&!name.equals("")){
-								db_academy.update(before,name);
+							if(!before.equals("")){
+								name=JOptionPane.showInputDialog(null,"请输入名字",academy_list.getSelectedValue());
+								if(name!=null&&!name.equals("")){
+									db_academy.update(before,name);
+								}
 							}
 							break;
 						case 2:
 							before=major_list.getSelectedValue();
-							name=JOptionPane.showInputDialog(null,"请输入名字",major_list.getSelectedValue());
-							if(name!=null&&!name.equals("")){
-								db_major.update(before,name);
+							if(!before.equals("")){
+								name=JOptionPane.showInputDialog(null,"请输入名字",major_list.getSelectedValue());
+								if(name!=null&&!name.equals("")){
+									db_major.update(before,name);
+								}
 							}
 							break;
 						case 3:
 							before=class_list.getSelectedValue();
-							name=JOptionPane.showInputDialog(null,"请输入名字",class_list.getSelectedValue());
-							if(name!=null&&!name.equals("")){
-								db_class.update(before,name);
+							if(!before.equals("")){
+								name=JOptionPane.showInputDialog(null,"请输入名字",class_list.getSelectedValue());
+								if(name!=null&&!name.equals("")){
+									db_class.update(before,name);
+								}
 							}
 							break;
 						}
 						loadData(selected_list);
 					}catch(SQLException ex){
-						LoggerFactory.getLogger(ClassPanel.class).error(e.toString());
+						LoggerFactory.getLogger(ClassPanel.class).error(ex.toString());
 					}
 				}
 			});
